@@ -1,4 +1,4 @@
-# Introduction au Java Server Pages
+## Introduction aux Java Server Pages
 
 Générer du code HTML à partir d'expressions du langage Java.
 
