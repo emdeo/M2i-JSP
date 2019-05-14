@@ -4,8 +4,8 @@
 
 **Objectif** : générer du code HTML à partir d'expressions du langage Java.
 
-**Exercice 1** : récupérer les noms et les valeurs des paramètres de la page et les afficher dans un tableau HTML (fichiers **index.jsp**, **page2.jsp**, **page3.jsp**).
+**Exercice 1** : récupérer les noms et les valeurs des paramètres de la page et les afficher dans un tableau HTML (fichiers *index.jsp*, *page2.jsp*, *page3.jsp*).
 
-**Exercice 2** : enregistrer les attributs d'un utilisateur (nom, prenom, taille, poids, genre) et afficher dans une nouvelle page ses scores IMC et autres (dossier **JSP_IMC**).
+**Exercice 2** : enregistrer les attributs d'un utilisateur (nom, prenom, taille, poids, genre) et afficher dans une nouvelle page ses scores IMC et autres (dossier *JSP_IMC*).
 
-**Exercice 3** : manipuler une base de données à partir d'un fichier JSP (dossier **JSP_BDD**).
+**Exercice 3** : manipuler une base de données à partir d'un fichier JSP (dossier *JSP_BDD*).
