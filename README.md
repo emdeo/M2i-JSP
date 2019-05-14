@@ -1,6 +1,6 @@
 ## Introduction aux Java Server Pages
 
-*Pour plus de détails sur les concepts théoriques, consulter la <a href="https://github.com/emdeo/M2i-JSP/wiki/Introduction-aux-Java-Server-Pages">page wiki</a>.*
+*Pour plus de détails sur les concepts théoriques, consultez la <a href="https://github.com/emdeo/M2i-JSP/wiki/Introduction-aux-Java-Server-Pages">page wiki</a>.*
 
 **Objectif** : générer du code HTML à partir d'expressions du langage Java.
 
