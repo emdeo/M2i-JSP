@@ -38,13 +38,15 @@
 							&& (request.getParameter("txtPoids") != null) && (request.getParameter("txtTaille") != null)
 							&& (request.getParameter("lstSexe") != null)) {
 
+						int IDPersonne = Integer.parseInt(request.getParameter("txtIDPersonne"));
 						String nom = request.getParameter("txtNom");
 						String prenom = request.getParameter("txtPrenom");
 						float poids = Float.parseFloat(request.getParameter("txtPoids"));
 						float taille = Float.parseFloat(request.getParameter("txtTaille"));
 						Sexe genre = Sexe.valueOf(request.getParameter("lstSexe"));
+						int IDSociete = Integer.parseInt(request.getParameter("txtIDSociete"));
 
-						p1 = new Personne(nom, prenom, taille, poids, genre);
+						p1 = new Personne(IDPersonne, nom, prenom, taille, poids, genre, IDSociete);
 					}
 
 					if (p1 != null) {
