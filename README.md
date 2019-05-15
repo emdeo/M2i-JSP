@@ -8,4 +8,4 @@
 
 **Exercice 2** : enregistrer les attributs d'un utilisateur (nom, prenom, taille, poids, genre) et afficher dans une nouvelle page ses scores IMC et autres (dossier *JSP_IMC*).
 
-**Exercice 3** : manipuler une base de données à partir d'un fichier JSP (dossier *JSP_BDD*).
+**Exercice 3** : manipuler une base de données à partir de fichiers JSP, JavaScript et d'une Servlet (dossier *JSP_BDD*).
