@@ -15,17 +15,21 @@ $(document).ready(function() {
 		})
 	})
 
+	$.post('/deleteRoute', {
+		id : 1,
+		action : 'delete'
+	});
+
 	$(".btnDelete").on("click", function() {
 		$.ajax({
 			url : "MaServlet",
-			type : "delete",
+			type : "post", // remplacer "delete" par "post" ?
 			dataType : "html",
 			data : "IdSociete=" + $(this).attr("data-idSociete"),
 			success : function(code, status) {
-				alert(status)
 				$("#tbodySociete").empty().html(code)
 			},
-			error:function(jqXHR, textStatus, errorThrown){
+			error : function(jqXHR, textStatus, errorThrown) {
 				alert(jqXHR, textStatus, errorThrown)
 			}
 		})

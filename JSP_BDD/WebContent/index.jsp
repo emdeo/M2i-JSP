@@ -162,7 +162,7 @@
 								+ "' class='btnUpdate'><i class='fa fa-bars'></i></button></td>";
 								
 						String btnDelete = "<td class='w-5'><button data-idSociete='" + s.get_ID_Societe()
-								+ "'class='btnDelete'><i class='fa fa-trash'></i></button></td>";
+								+ "'class='btnDelete' data-token='{{ csrf_token() }}'><i class='fa fa-trash'></i></button></td>";
 
 						out.println("<tr>" + IDSoc + Nom + CA + Act + Empl + btnUpdate + btnDelete + "</tr>");
 					}
