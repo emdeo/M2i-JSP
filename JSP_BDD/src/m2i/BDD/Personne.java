@@ -96,7 +96,7 @@ public class Personne {
 		float taille = this.Taille * 100f;
 		float output = taille - 100f;
 
-		if (this.Genre == Sexe.feminin)
+		if (this.Genre == Sexe.FEMININ)
 			output -= ((taille - 150f) / 2.5f);
 		else
 			output -= ((taille - 150f) / 4f);

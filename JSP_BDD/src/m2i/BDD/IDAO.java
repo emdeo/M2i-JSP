@@ -2,11 +2,9 @@ package m2i.BDD;
 
 import java.util.ArrayList;
 
-// Agit sur des objets de type T (Data Access Object)
+//Agit sur des objets de type T (Data Access Object)
 public interface IDAO<T> {
 
-	int Instanciate();
-	
 	// Les 4 opérations de base des BD (CRUD) :
 
 	int Create(T obj); // extrait les données de l'objet T et renvoie le nombre de modifications dans

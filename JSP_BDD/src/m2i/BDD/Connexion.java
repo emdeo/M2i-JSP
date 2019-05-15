@@ -31,9 +31,13 @@ public class Connexion {
 				if (_instance == null) { // on crée l'instance si ce n'est pas déjà fait
 
 					try {
+						Class.forName("com.mysql.cj.jdbc.Driver");
+//						Class.forName("com.mysql.jdbc.Connection");
 						_instance = DriverManager.getConnection(url, user, pwd); // on crée la connexion
 					} catch (SQLException e) {
 						System.out.println(e.getMessage()); // afficher message d'erreur
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
 					}
 				}
 			}

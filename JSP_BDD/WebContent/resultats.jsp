@@ -27,16 +27,18 @@
 	}%>
 
 	<div class="container align-items-center">
-		<form method="get" action="./resultats.jsp">
+		<form>
 			<div>
 
 				<!-- Scriptlet de présentation -->
 				<%
 					Personne p1 = null;
 
-					if ((request.getParameter("txtNom") != null) && (request.getParameter("txtPrenom") != null)
-							&& (request.getParameter("txtPoids") != null) && (request.getParameter("txtTaille") != null)
-							&& (request.getParameter("lstSexe") != null)) {
+					/* L'utilisateur doit compléter TOUS les inputs pour pouvoir accéder à la page resultats.jsp */
+					if ((request.getParameter("txtIDPersonne") != null) && (request.getParameter("txtNom") != null)
+							&& (request.getParameter("txtPrenom") != null) && (request.getParameter("txtPoids") != null)
+							&& (request.getParameter("txtTaille") != null) && (request.getParameter("lstSexe") != null)
+							&& (request.getParameter("txtIDSociete") != null)) {
 
 						int IDPersonne = Integer.parseInt(request.getParameter("txtIDPersonne"));
 						String nom = request.getParameter("txtNom");
@@ -47,6 +49,9 @@
 						int IDSociete = Integer.parseInt(request.getParameter("txtIDSociete"));
 
 						p1 = new Personne(IDPersonne, nom, prenom, taille, poids, genre, IDSociete);
+						
+						DAO_Personne daop = new DAO_Personne();
+						daop.Create(p1);
 					}
 
 					if (p1 != null) {
