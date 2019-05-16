@@ -158,13 +158,13 @@
 						String Act = "<td class='w-15'>" + s.get_Activite() + "</td>";
 						String Empl = "<td class='w-15'>" + s.get_Nb_Employes() + "</td>";
 
-						String btnUpdate = "<td class='w-5'><button data-idSociete='" + s.get_ID_Societe()
-								+ "' class='btnUpdate'><i class='fa fa-bars'></i></button></td>";
+						String btnSelect = "<td class='w-5'><button data-idSociete='" + s.get_ID_Societe()
+								+ "' class='btnSelect'><i class='fa fa-bars'></i></button></td>";
 								
 						String btnDelete = "<td class='w-5'><button data-idSociete='" + s.get_ID_Societe()
 								+ "'class='btnDelete' data-token='{{ csrf_token() }}'><i class='fa fa-trash'></i></button></td>";
 
-						out.println("<tr>" + IDSoc + Nom + CA + Act + Empl + btnUpdate + btnDelete + "</tr>");
+						out.println("<tr>" + IDSoc + Nom + CA + Act + Empl + btnSelect + btnDelete + "</tr>");
 					}
 				%>
 			</tbody>

@@ -29,32 +29,20 @@ public class DAO_Personne implements IDAO<Personne> {
 		}
 
 		int output = -1;
-		String request = "INSERT INTO personne VALUES (?,?,?,?,?,?,?)";
 
 		ArrayList<Personne> listePersonnes = new ArrayList<Personne>();
 		listePersonnes.add(new Personne(1, "Alpha", "Alice", 1.8f, 73, Sexe.FEMININ, 1));
 		listePersonnes.add(new Personne(2, "Bravo", "Bernard", 1.5f, 64f, Sexe.MASCULIN, 1));
-		listePersonnes.add(new Personne(3, "Charly", "Carole", 1.68f, 92f, Sexe.FEMININ, 1));
-		listePersonnes.add(new Personne(4, "Delta", "Denis", 1.91f, 130f, Sexe.MASCULIN, 1));
+		listePersonnes.add(new Personne(3, "Charly", "Carole", 1.68f, 92f, Sexe.FEMININ, 2));
+		listePersonnes.add(new Personne(4, "Delta", "Denis", 1.91f, 130f, Sexe.MASCULIN, 2));
+		listePersonnes.add(new Personne(5, "Echo", "Elise", 1.8f, 73, Sexe.FEMININ, 3));
+		listePersonnes.add(new Personne(6, "Foxtrot", "Fanchon", 1.5f, 64f, Sexe.FEMININ, 3));
+		listePersonnes.add(new Personne(7, "Golf", "Gilbert", 1.68f, 92f, Sexe.MASCULIN, 4));
+
+		DAO_Personne daop = new DAO_Personne();
 
 		for (Personne p : listePersonnes) {
-			try {
-
-				PreparedStatement ps = _Cnn.prepareStatement(request);
-
-				ps.setInt(1, p.getID_Personne());
-				ps.setString(2, p.getNom());
-				ps.setString(3, p.getPrenom());
-				ps.setFloat(4, p.getTaille());
-				ps.setFloat(5, p.getPoids());
-				ps.setString(6, p.getGenre().name());
-				ps.setInt(7, p.getID_Societe());
-
-				output = ps.executeUpdate();
-
-			} catch (SQLException error) {
-				System.out.println("DAO_Personne Instanciate() error: " + error.getMessage() + "\n");
-			}
+			daop.Create(p);
 		}
 
 		return output;
@@ -79,11 +67,13 @@ public class DAO_Personne implements IDAO<Personne> {
 			ps.setString(6, p.getGenre().name());
 			ps.setInt(7, p.getID_Societe());
 
+//			Incrémenter le nombre d'employés de 1 pour la société correspondante
+			DAO_Societe daos = new DAO_Societe();
+			int nbEmployes = daos.Read(p.getID_Societe()).get_Nb_Employes();
+			daos.UpdateNbEmployes(p.getID_Societe(), nbEmployes + 1);
+
 			// Enregistre le nombre de modifs exécutées
 			output = ps.executeUpdate();
-
-//			DAO_Societe daos = new DAO_Societe();
-//			output += daos.Create(new Societe(p.getID_Societe(), "", -99f, Activites.INCONNU));
 
 		} catch (SQLException e) {
 			System.out.println("DAO_Personne Create() error: " + e.getMessage() + "\n");
@@ -271,6 +261,27 @@ public class DAO_Personne implements IDAO<Personne> {
 
 		} catch (SQLException e) {
 			System.out.println("DAO_Personne DeleteAll() error: " + e.getMessage() + "\n");
+		}
+
+		return output;
+	}
+
+	/**
+	 * Vider la table.
+	 * 
+	 * @return
+	 */
+	public int Truncate() {
+
+		int output = -1;
+		String request = "TRUNCATE Personne";
+
+		try {
+			PreparedStatement ps = _Cnn.prepareStatement(request);
+			output = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println(("DAO_Personne Truncate() error: " + e.getMessage() + "\n"));
 		}
 
 		return output;
