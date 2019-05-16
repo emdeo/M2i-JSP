@@ -12,7 +12,7 @@ public class DAO_Societe implements IDAO<Societe> {
 	final static String user = "root";
 	final static String pwd = "";
 
-	// On se connecte à la BD "dp_formation"
+	// Connexion à la BD "dp_formation"
 	private static Connection _Cnn = Connexion.get_instance(url, user, pwd);
 
 	public int Instanciate() {
@@ -20,9 +20,9 @@ public class DAO_Societe implements IDAO<Societe> {
 		int output = -1;
 
 		DAO_Societe daos = new DAO_Societe();
-		daos.Create(new Societe(1, "Alcibiade", 45f, Activites.Energie, 0));
-		daos.Create(new Societe(2, "Bartolomeo", 789.5f, Activites.COMMERCE, 0));
-		daos.Create(new Societe(3, "Calipyge", 24f, Activites.ESN, 0));
+		daos.Create(new Societe(1, "Alcibiad", 45f, Activites.ENERGIE, 0));
+		daos.Create(new Societe(2, "Barthom", 789.5f, Activites.COMMERCE, 0));
+		daos.Create(new Societe(3, "Calipyge", 24f, Activites.NUMERIQUE, 0));
 		daos.Create(new Societe(4, "Durotron", 666f, Activites.SCIENCES, 0));
 
 		return output;
@@ -124,17 +124,18 @@ public class DAO_Societe implements IDAO<Societe> {
 	}
 
 	/**
-	 * Mettre à jour le nombre d'employés de la société dont on passe l'ID en paramètre.
+	 * Mettre à jour le nombre d'employés de la société dont on passe l'ID en
+	 * paramètre.
 	 * 
 	 * @param IdSociete
 	 * @return
 	 */
 	public int UpdateNbEmployes(int IdSociete, int nb) {
-		
+
 		int output = -1;
-		
+
 		String request = "UPDATE Societe SET Employe = ? WHERE ID_Societe = ?";
-		
+
 		try {
 			// Charger la requête SQL
 			PreparedStatement ps = _Cnn.prepareStatement(request);
@@ -149,10 +150,10 @@ public class DAO_Societe implements IDAO<Societe> {
 		} catch (SQLException e) {
 			System.out.println("DAO_Societe UpdateNbEmployes() error: " + e.getMessage() + "\n");
 		}
-		
+
 		return output;
 	}
-	
+
 	public int Update(Societe s) {
 
 		int output = -1;
@@ -221,7 +222,7 @@ public class DAO_Societe implements IDAO<Societe> {
 
 		return output;
 	}
-	
+
 	/**
 	 * Vider la table.
 	 * 

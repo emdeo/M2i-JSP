@@ -32,106 +32,80 @@ public class MaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int idSociete = Integer.parseInt(request.getParameter("IdSociete"));
 		String btnAction = request.getParameter("btnAction");
 
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+
+//		Afficher la table des employés quand le bouton "Select" est cliqué
 		if (btnAction.equals("Select")) {
+
+			int idSociete = Integer.parseInt(request.getParameter("IdSociete"));
+			out.append(HTMLDynamique.TableauEmployes(idSociete));
+
+		}
+//		Créer un formulaire dans l'élément "collapseSociete"
+		else if (btnAction.contentEquals("Update")) {
+
+			int idSociete = Integer.parseInt(request.getParameter("IdSociete"));
+			out.append(HTMLDynamique.formulaireUpdate(idSociete));
+
+		}
+//		Modifier une entrée du tableau de sociétés
+		else if (btnAction.contentEquals("ModifierSociete")) {
+
+			int idSociete = Integer.parseInt(request.getParameter("IdSociete"));
+
+//			Récupérer les nouvelles valeurs de la société
+			String nom = request.getParameter("newNom");
+			float CA = Float.parseFloat(request.getParameter("newCA"));
+			Activites act = Activites.valueOf(request.getParameter("newActivite"));
+
+//			Modifier l'entrée de la table 'Societe'
+			DAO_Societe daos = new DAO_Societe();
+
+			Societe s = daos.Read(idSociete);
+			s.set_Nom(nom);
+			s.set_CA(CA);
+			s.set_Activite(act);
+			s.set_Nb_Employes(0);
+
+			System.out.println("Nouvelle société : " + s.toString());
+
+			daos.Update(s);
+
+//			Supprimer tous les employés dont l'ID Société est celui passé en paramètre
 			DAO_Personne daop = new DAO_Personne();
-			ArrayList<Personne> lstEmployes = daop.ListeEmployesSociete(idSociete);
+			daop.DeleteAll(idSociete);
 
-			response.setContentType("text/html");
-			PrintWriter out = response.getWriter();
+//			Modifier le tableau de sociétés dans la page HTML
+			out.append(HTMLDynamique.TableauSocietes());
+		}
+//		Supprimer la table des employés + la ligne société quand le bouton "Delete" est cliqué
+		else if (btnAction.equals("Delete")) {
 
-			String thead = "<thead><tr><th>ID Personne</th><th>Nom</th><th>Prenom</th><th>Taille</th><th>Poids"
-					+ "</th><th>Sexe</th><th>ID Société</th></tr></thead>";
-
-			String tbody = "<tbody>";
-			for (Personne p : lstEmployes) {
-				tbody += "<tr><td>" + p.getID_Personne() + "</td><td>" + p.getNom() + "</td><td>" + p.getPrenom()
-						+ "</td><td>" + p.getTaille() + "</td><td>" + p.getPoids() + "</td><td>" + p.getGenre()
-						+ "</td><td>" + p.getID_Societe() + "</td></tr>";
-			}
-			tbody += "</tbody>";
-
-			out.append(thead + tbody);
-		} else if (btnAction.equals("Delete")) {
-
-			PrintWriter pw = response.getWriter(); // Permet d'afficher du texte dans la page web via les méthodes println()
-			// ou append()
-			pw.println("idSociete :" + idSociete);
+			int idSociete = Integer.parseInt(request.getParameter("IdSociete"));
 
 			DAO_Societe daos = new DAO_Societe();
 			daos.Delete(idSociete);
 
-			response.setContentType("text/html");
-			PrintWriter out = response.getWriter();
-
-//		Récupérer les employés des sociétés enregistrées
+//			Récupérer les employés des sociétés enregistrées
 			DAO_Personne daop = new DAO_Personne();
 			ArrayList<Personne> lstEmployes = daop.ListeEmployesSociete(idSociete);
 
-			ArrayList<Societe> lstSoc = daos.ReadAll();
-			for (Societe s : lstSoc) {
-				String IDSoc = "<td class='w-15'>" + s.get_ID_Societe() + "</td>";
-				String Nom = "<td class='w-15'>" + s.get_Nom() + "</td>";
-				String CA = "<td class='w-15'>" + s.get_CA() + "</td>";
-				String Act = "<td class='w-15'>" + s.get_Activite() + "</td>";
-				String Empl = "<td class='w-15'>" + s.get_Nb_Employes() + "</td>";
-
-				String btnUpdate = "<td class='w-5'><button data-idSociete='" + s.get_ID_Societe()
-						+ "' class='btnUpdate'><i class='fa fa-bars'></i></button></td>";
-
-				String btnDelete = "<td class='w-5'><button data-idSociete='" + s.get_ID_Societe()
-						+ "'class='btnDelete'><i class='fa fa-trash'></i></button></td>";
-
-				out.println("<tr>" + IDSoc + Nom + CA + Act + Empl + btnUpdate + btnDelete + "</tr>");
-			}
+			out.append(HTMLDynamique.TableauSocietes());
 		}
+	}
+
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		// super.doDelete(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+		// super.doPost(req, resp);
 	}
-
-	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		super.doDelete(req, resp);
-
-		int idSociete = Integer.parseInt(req.getParameter("IdSociete"));
-
-		PrintWriter pw = resp.getWriter(); // Permet d'afficher du texte dans la page web via les méthodes println()
-		// ou append()
-		pw.println("idSociete :" + idSociete);
-
-		DAO_Societe daos = new DAO_Societe();
-		daos.Delete(idSociete);
-
-		resp.setContentType("text/html");
-		PrintWriter out = resp.getWriter();
-
-//		Récupérer les employés des sociétés enregistrées
-		DAO_Personne daop = new DAO_Personne();
-		ArrayList<Personne> lstEmployes = daop.ListeEmployesSociete(idSociete);
-
-		ArrayList<Societe> lstSoc = daos.ReadAll();
-		for (Societe s : lstSoc) {
-			String IDSoc = "<td class='w-15'>" + s.get_ID_Societe() + "</td>";
-			String Nom = "<td class='w-15'>" + s.get_Nom() + "</td>";
-			String CA = "<td class='w-15'>" + s.get_CA() + "</td>";
-			String Act = "<td class='w-15'>" + s.get_Activite() + "</td>";
-			String Empl = "<td class='w-15'>" + s.get_Nb_Employes() + "</td>";
-
-			String btnUpdate = "<td class='w-5'><button data-idSociete='" + s.get_ID_Societe()
-					+ "' class='btnUpdate'><i class='fa fa-bars'></i></button></td>";
-
-			String btnDelete = "<td class='w-5'><button data-idSociete='" + s.get_ID_Societe()
-					+ "'class='btnDelete'><i class='fa fa-trash'></i></button></td>";
-
-			out.println("<tr>" + IDSoc + Nom + CA + Act + Empl + btnUpdate + btnDelete + "</tr>");
-		}
-	}
-
 }
