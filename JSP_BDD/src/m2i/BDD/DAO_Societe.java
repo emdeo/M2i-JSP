@@ -33,6 +33,9 @@ public class DAO_Societe implements IDAO<Societe> {
 		int output = -1;
 		String request1 = "INSERT INTO Societe VALUES (?,?,?,?,?)";
 
+//		Message d'info
+		System.out.println("DAO_Societe  Create");
+
 		try {
 			PreparedStatement ps = _Cnn.prepareStatement(request1);
 
@@ -54,7 +57,7 @@ public class DAO_Societe implements IDAO<Societe> {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("DAO_Societe Create() error: " + e.getMessage() + "\n");
+			System.out.println("DAO_Societe  Create() error: " + e.getMessage());
 		}
 
 		return output;
@@ -65,7 +68,8 @@ public class DAO_Societe implements IDAO<Societe> {
 		Societe output = null;
 		String ma_requete = "SELECT * FROM Societe WHERE ID_Societe = ?";
 
-		System.out.println("Sending MySQL request : " + ma_requete + "\n");
+//		Message d'info
+		System.out.println("DAO_Societe  Read");
 
 		try {
 			PreparedStatement ps = _Cnn.prepareStatement(ma_requete);
@@ -81,11 +85,10 @@ public class DAO_Societe implements IDAO<Societe> {
 				int nbEmployes = rs.getInt("Employe");
 
 				output = new Societe(id, nom, ca, activite, nbEmployes);
-				output.toString();
 			}
 
 		} catch (SQLException e) {
-			System.out.println("DAO_Personne Read() error: " + e.getMessage() + "\n");
+			System.out.println("DAO_Societe  Read() error: " + e.getMessage());
 		}
 
 		return output;
@@ -96,7 +99,8 @@ public class DAO_Societe implements IDAO<Societe> {
 		ArrayList<Societe> output = new ArrayList<Societe>();
 		String request = "SELECT * FROM Societe";
 
-		System.out.println("Sending SQL request: " + request + "\n");
+//		Message d'info
+		System.out.println("DAO_Societe  ReadAll");
 
 		try {
 
@@ -113,11 +117,10 @@ public class DAO_Societe implements IDAO<Societe> {
 				Societe s = new Societe(id, nom, ca, act, nbEmployes);
 				output.add(s);
 
-				System.out.println(s);
 			}
 
 		} catch (SQLException e) {
-			System.out.println("DAO_Personne ReadAll() error: " + e.getMessage() + "\n");
+			System.out.println("DAO_Societe  ReadAll() error: " + e.getMessage());
 		}
 
 		return output;
@@ -136,6 +139,9 @@ public class DAO_Societe implements IDAO<Societe> {
 
 		String request = "UPDATE Societe SET Employe = ? WHERE ID_Societe = ?";
 
+//		Message d'info
+		System.out.println("DAO_Societe  UpdateNbEmployes");
+
 		try {
 			// Charger la requête SQL
 			PreparedStatement ps = _Cnn.prepareStatement(request);
@@ -148,7 +154,7 @@ public class DAO_Societe implements IDAO<Societe> {
 			output = ps.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println("DAO_Societe UpdateNbEmployes() error: " + e.getMessage() + "\n");
+			System.out.println("DAO_Societe  UpdateNbEmployes() error: " + e.getMessage());
 		}
 
 		return output;
@@ -165,6 +171,9 @@ public class DAO_Societe implements IDAO<Societe> {
 		}
 
 		String request = "UPDATE Societe SET Nom = ?, CA = ?, Activite = ?, Employe = ? WHERE ID_Societe = ?";
+
+//		Message d'info
+		System.out.println("DAO_Societe  Update " + s.get_ID_Societe());
 
 		try {
 			// Charger la requête SQL
@@ -190,7 +199,7 @@ public class DAO_Societe implements IDAO<Societe> {
 			output = ps.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println("DAO_Societe Update() error: " + e.getMessage() + "\n");
+			System.out.println("DAO_Societe  Update() error: " + e.getMessage());
 		}
 		return output;
 	}
@@ -203,6 +212,9 @@ public class DAO_Societe implements IDAO<Societe> {
 		int output = 0;
 		String request = "DELETE FROM Societe WHERE ID_Societe = ?";
 		String request2 = "DELETE FROM Personne WHERE ID_Societe = ?";
+
+//		Message d'info
+		System.out.println("DAO_Societe  Delete " + id);
 
 		try {
 
@@ -217,7 +229,7 @@ public class DAO_Societe implements IDAO<Societe> {
 			output = ps.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println(("DAO_Societe Delete() error: " + e.getMessage() + "\n"));
+			System.out.println("DAO_Societe  Delete() error: " + e.getMessage() + "\n");
 		}
 
 		return output;
@@ -233,12 +245,15 @@ public class DAO_Societe implements IDAO<Societe> {
 		int output = -1;
 		String request = "TRUNCATE Societe";
 
+//		Message d'info
+		System.out.println("###\nDAO_Societe Truncate\n###");
+
 		try {
 			PreparedStatement ps = _Cnn.prepareStatement(request);
 			output = ps.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println(("DAO_Societe Truncate() error: " + e.getMessage() + "\n"));
+			System.out.println(("DAO_Societe  Truncate() error: " + e.getMessage() + "\n"));
 		}
 
 		return output;

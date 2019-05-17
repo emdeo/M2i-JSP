@@ -14,6 +14,9 @@
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
 
+<!-- Import custom CSS -->
+<link rel="stylesheet" href="./index.css">
+
 <!-- Scripts JQuery (Ajax), Popper et BootStrap -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -32,22 +35,22 @@
 </head>
 <body>
 
+	<%
+		// Réinitialiser les tables 'Societe' et 'Personne'
+
+		DAO_Societe daos = new DAO_Societe();
+		daos.Truncate();
+		daos.Instanciate();
+
+		DAO_Personne daop = new DAO_Personne();
+		daop.Truncate();
+		daop.Instanciate();
+	%>
+
 	<div class="container align-items-center">
 		<br>
 		<h3>Table Société</h3>
 		<br>
-
-		<%
-			// Réinitialiser les tables 'Societe' et 'Personne'
-
-			DAO_Societe daos = new DAO_Societe();
-			daos.Truncate();
-			daos.Instanciate();
-
-			DAO_Personne daop = new DAO_Personne();
-			daop.Truncate();
-			daop.Instanciate();
-		%>
 
 		<!-- Afficher la table "Societe" de la BDD "dp_formation" -->
 		<table class="table">
@@ -71,64 +74,24 @@
 			</tbody>
 		</table>
 
+		<!-- Collapse : Ajouter une société -->
+		<button type='button' class='btn btn-outline-primary' id='btnAjouterSociete'
+			data-toggle='collapse' data-target='#collapseAjouterSociete'
+			aria-expanded='false' aria-controls='collapseExample'>Ajouter
+			une société</button>
+		<div class="collapse" id="collapseAjouterSociete"></div>
+
 		<!-- Collapse : Modifier une société -->
-		<div class="collapse" id="collapseSociete"></div>
+		<div class="collapse" id="collapseModifierSociete"></div>
 
 		<div id="tblEmployes"></div>
+
+		<%
+			/* Ajouter 2 modaux (modifier un employé et ajouter un nouvel employé) */
+			out.println(HTMLDynamique.ModifierEmploye());
+			out.println(HTMLDynamique.AjouterEmploye());
+		%>
 	</div>
-
-	<style>
-
-/* Régler la largeur de colonne d'un tableau */
-table .w-5 {
-	width: 5%;
-}
-
-table .w-15 {
-	width: 15%;
-}
-
-/* Mise en forme des boutons (couleurs) */
-.btnSelect {
-	background-color: DodgerBlue; /* Blue background */
-	border: none; /* Remove borders */
-	color: white; /* White text */
-	padding: 12px 16px; /* Some padding */
-	font-size: 16px; /* Set a font size */
-	cursor: pointer; /* Mouse pointer on hover */
-}
-
-.btnUpdate {
-	background-color: #28a745; /* Yellow background */
-	border: none; /* Remove borders */
-	color: white; /* White text */
-	padding: 12px 16px; /* Some padding */
-	font-size: 16px; /* Set a font size */
-	cursor: pointer; /* Mouse pointer on hover */
-}
-
-.btnDelete {
-	background-color: LightCoral; /* Red background */
-	border: none; /* Remove borders */
-	color: white; /* White text */
-	padding: 12px 16px; /* Some padding */
-	font-size: 16px; /* Set a font size */
-	cursor: pointer; /* Mouse pointer on hover */
-}
-
-/* Background plus sombre quand on passe la souris sur le bouton */
-.btnSelect:hover {
-	background-color: RoyalBlue;
-}
-
-.btnUpdate:hover {
-	background-color: #208537;
-}
-
-.btnDelete:hover {
-	background-color: IndianRed;
-}
-</style>
 
 </body>
 </html>

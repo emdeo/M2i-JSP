@@ -34,55 +34,42 @@ public class MaServlet extends HttpServlet {
 
 		String btnAction = request.getParameter("btnAction");
 
+		System.out.println("\n\nBTN ACTION (get) - " + btnAction);
+
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		
+		
 
-//		Afficher la table des employés quand le bouton "Select" est cliqué
+//		1 - CREER UN FORMULAIRE DANS L'ELEMENT "collapseAjouterSociete"
+		if (btnAction.contentEquals("AjouterSociete")) {
+			out.append(HTMLDynamique.formulaireAjouterSociete());
+		}
+		
+		
+		
+//		2 - AFFICHER LA TABLE DES EMPLOYES QUAND ON CLIQUE SUR LE BOUTON "Select"
 		if (btnAction.equals("Select")) {
 
 			int idSociete = Integer.parseInt(request.getParameter("IdSociete"));
 			out.append(HTMLDynamique.TableauEmployes(idSociete));
 
 		}
-//		Créer un formulaire dans l'élément "collapseSociete"
-		else if (btnAction.contentEquals("Update")) {
+		
+		
+		
+//		3 - CREER UN FORMULAIRE DANS L'ELEMENT "collapseModifierSociete"
+		if (btnAction.contentEquals("Update")) {
 
 			int idSociete = Integer.parseInt(request.getParameter("IdSociete"));
 			out.append(HTMLDynamique.formulaireUpdate(idSociete));
 
 		}
-//		Modifier une entrée du tableau de sociétés
-		else if (btnAction.contentEquals("ModifierSociete")) {
-
-			int idSociete = Integer.parseInt(request.getParameter("IdSociete"));
-
-//			Récupérer les nouvelles valeurs de la société
-			String nom = request.getParameter("newNom");
-			float CA = Float.parseFloat(request.getParameter("newCA"));
-			Activites act = Activites.valueOf(request.getParameter("newActivite"));
-
-//			Modifier l'entrée de la table 'Societe'
-			DAO_Societe daos = new DAO_Societe();
-
-			Societe s = daos.Read(idSociete);
-			s.set_Nom(nom);
-			s.set_CA(CA);
-			s.set_Activite(act);
-			s.set_Nb_Employes(0);
-
-			System.out.println("Nouvelle société : " + s.toString());
-
-			daos.Update(s);
-
-//			Supprimer tous les employés dont l'ID Société est celui passé en paramètre
-			DAO_Personne daop = new DAO_Personne();
-			daop.DeleteAll(idSociete);
-
-//			Modifier le tableau de sociétés dans la page HTML
-			out.append(HTMLDynamique.TableauSocietes());
-		}
-//		Supprimer la table des employés + la ligne société quand le bouton "Delete" est cliqué
-		else if (btnAction.equals("Delete")) {
+		
+		
+		
+//		4 - SUPPRIMER L'ENTREE SOCIETE + LES ENTREES EMPLOYES CORRESPONDANTES QUAND ON CLIQUE SUR "Delete"
+		if (btnAction.equals("Delete")) {
 
 			int idSociete = Integer.parseInt(request.getParameter("IdSociete"));
 
@@ -95,6 +82,74 @@ public class MaServlet extends HttpServlet {
 
 			out.append(HTMLDynamique.TableauSocietes());
 		}
+
+		
+		
+//		5 - CONFIRMER L'AJOUT D'UNE ENTREE A LA TABLE 'SOCIETE'
+		if (btnAction.contentEquals("ConfirmerAjoutSociete")) {
+
+			System.out.println("Confirmer ajout soc");
+
+			int idSociete = Integer.parseInt(request.getParameter("IdSociete"));
+
+//			Récupérer les valeurs de la nouvelle société
+			String nom = request.getParameter("newNom");
+			float CA = Float.parseFloat(request.getParameter("newCA"));
+			Activites act = Activites.valueOf(request.getParameter("newActivite"));
+
+			System.out.println(
+					"#####\nMaServlet.doGet : AJOUTER la société " + idSociete + " : " + nom + ", " + CA + ", " + act + "\n#####");
+
+			DAO_Societe daos = new DAO_Societe();
+			daos.Create(new Societe(idSociete, nom, CA, act, 0));
+
+//			Modifier le tableau de sociétés dans la page HTML
+			out.append(HTMLDynamique.TableauSocietes());
+		}
+		
+		
+		
+//		6 - MODIFIER UNE ENTREE DU TABLEAU DE SOCIETES
+		if (btnAction.contentEquals("ModifierSociete")) {
+
+			int idSociete = Integer.parseInt(request.getParameter("IdSociete"));
+
+//			Récupérer les nouvelles valeurs de la société
+			String nom = request.getParameter("newNom");
+			float CA = Float.parseFloat(request.getParameter("newCA"));
+			Activites act = Activites.valueOf(request.getParameter("newActivite"));
+
+			System.out.println(
+					"#####\nMaServlet.doGet : MODIFIER la société " + idSociete + " : " + nom + ", " + CA + ", " + act + "\n#####");
+
+//			Modifier l'entrée de la table 'Societe'
+			DAO_Societe daos = new DAO_Societe();
+
+			Societe s = daos.Read(idSociete);
+			s.set_Nom(nom);
+			s.set_CA(CA);
+			s.set_Activite(act);
+			s.set_Nb_Employes(0);
+
+			daos.Update(s);
+
+//			Supprimer tous les employés dont l'ID Société est celui passé en paramètre
+			DAO_Personne daop = new DAO_Personne();
+			daop.DeleteAll(idSociete);
+
+//			Modifier le tableau de sociétés dans la page HTML
+			out.append(HTMLDynamique.TableauSocietes());
+		}
+		
+		
+		
+//		7 - AJOUTER UN EMPLOYE A LA SOCIETE
+		if (btnAction.contentEquals("AjoutEmploye")) {
+
+			int idSociete = Integer.parseInt(request.getParameter("IdSociete"));
+			out.append(HTMLDynamique.AjouterEmploye());
+			
+		}
 	}
 
 	@Override
@@ -104,7 +159,8 @@ public class MaServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// super.doPost(req, resp);
 	}

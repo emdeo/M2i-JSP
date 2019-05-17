@@ -55,6 +55,9 @@ public class DAO_Personne implements IDAO<Personne> {
 		int output = -1;
 		String ma_requete = "INSERT INTO Personne VALUES (?,?,?,?,?,?,?)";
 
+//		Message d'info
+		System.out.println("DAO_Personne Create");
+
 		try {
 			PreparedStatement ps = _Cnn.prepareStatement(ma_requete);
 
@@ -76,7 +79,7 @@ public class DAO_Personne implements IDAO<Personne> {
 			output = ps.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println("DAO_Personne Create() error: " + e.getMessage() + "\n");
+			System.out.println("DAO_Personne Create() error: " + e.getMessage());
 		}
 
 		return output;
@@ -89,7 +92,8 @@ public class DAO_Personne implements IDAO<Personne> {
 		Personne output = null;
 		String ma_requete = "select * from personne where ID_Personne = ?";
 
-		System.out.println("Sending MySQL request : " + ma_requete + "\n");
+//		Message d'info
+		System.out.println("DAO_Personne Read " + id);
 
 		try {
 			PreparedStatement ps = _Cnn.prepareStatement(ma_requete);
@@ -107,11 +111,11 @@ public class DAO_Personne implements IDAO<Personne> {
 				int id_Societe = rs.getInt("ID_Societe");
 
 				output = new Personne(id, nom, prenom, poids, taille, sexe, id_Societe);
-				output.toString();
+//				output.toString();
 			}
 
 		} catch (SQLException e) {
-			System.out.println("DAO_Personne Read() error: " + e.getMessage() + "\n");
+			System.out.println("DAO_Personne Read() error: " + e.getMessage());
 		}
 
 		return output;
@@ -126,7 +130,8 @@ public class DAO_Personne implements IDAO<Personne> {
 		ArrayList<Personne> output = new ArrayList<Personne>();
 		String ma_requete = "SELECT * FROM Personne";
 
-		System.out.println("Sending MySQL request : " + ma_requete + "\n");
+//		Message d'info
+		System.out.println("DAO_Personne ReadAll");
 
 		try {
 			PreparedStatement ps = _Cnn.prepareStatement(ma_requete);
@@ -146,7 +151,7 @@ public class DAO_Personne implements IDAO<Personne> {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("DAO_Personne ReadAll() error: " + e.getMessage() + "\n");
+			System.out.println("DAO_Personne ReadAll() error: " + e.getMessage());
 		}
 
 		return output;
@@ -158,7 +163,8 @@ public class DAO_Personne implements IDAO<Personne> {
 		ArrayList<Personne> output = new ArrayList<Personne>();
 		String ma_requete = "SELECT * FROM Personne WHERE ID_Societe = ?";
 
-		System.out.println("Sending MySQL request : " + ma_requete + "\n");
+//		Message d'info
+		System.out.println("DAO_Personne ListeEmployesSociete");
 
 		try {
 			PreparedStatement ps = _Cnn.prepareStatement(ma_requete);
@@ -179,7 +185,7 @@ public class DAO_Personne implements IDAO<Personne> {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("DAO_Personne ListeEmployesSociete() error: " + e.getMessage() + "\n");
+			System.out.println("DAO_Personne ListeEmployesSociete() error: " + e.getMessage());
 		}
 
 		return output;
@@ -195,6 +201,9 @@ public class DAO_Personne implements IDAO<Personne> {
 		int output = -1;
 		String ma_requete = "UPDATE Personne SET Nom = ?, Prenom = ?, Poids = ?,"
 				+ "Taille = ?, Sexe = ?, ID_Societe = ? WHERE ID_Personne = ?";
+
+//		Message d'info
+		System.out.println("DAO_Personne Update " + p.getID_Personne());
 
 		try {
 			PreparedStatement ps = _Cnn.prepareStatement(ma_requete);
@@ -212,7 +221,7 @@ public class DAO_Personne implements IDAO<Personne> {
 			output = ps.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println("DAO_Personne Update() error: " + e.getMessage() + "\n");
+			System.out.println("DAO_Personne Update() error: " + e.getMessage());
 		}
 
 		return output;
@@ -224,6 +233,9 @@ public class DAO_Personne implements IDAO<Personne> {
 		int output = -1;
 		String ma_requete = "DELETE FROM Personne WHERE ID_Personne = ?";
 
+//		Message d'info
+		System.out.println("DAO_Personne Delete " + id);
+
 		try {
 			PreparedStatement ps = _Cnn.prepareStatement(ma_requete);
 
@@ -233,7 +245,7 @@ public class DAO_Personne implements IDAO<Personne> {
 			output = ps.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println("DAO_Personne Delete() error: " + e.getMessage() + "\n");
+			System.out.println("DAO_Personne Delete() error: " + e.getMessage());
 		}
 
 		return output;
@@ -249,7 +261,10 @@ public class DAO_Personne implements IDAO<Personne> {
 
 		int output = -1;
 
-		String ma_requete = "DELETE * FROM Personne WHERE ID_Societe = ?";
+		String ma_requete = "DELETE FROM Personne WHERE ID_Societe = ?";
+
+//		Message d'info
+		System.out.println("DAO_Personne DeleAll (societe " + id_soc + ")");
 
 		try {
 			PreparedStatement ps = _Cnn.prepareStatement(ma_requete);
@@ -260,7 +275,7 @@ public class DAO_Personne implements IDAO<Personne> {
 			output = ps.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println("DAO_Personne DeleteAll() error: " + e.getMessage() + "\n");
+			System.out.println("DAO_Personne DeleteAll() error: " + e.getMessage());
 		}
 
 		return output;
@@ -275,6 +290,9 @@ public class DAO_Personne implements IDAO<Personne> {
 
 		int output = -1;
 		String request = "TRUNCATE Personne";
+
+//		Message d'info
+		System.out.println("###\nDAO_Personne Truncate\n###");
 
 		try {
 			PreparedStatement ps = _Cnn.prepareStatement(request);
