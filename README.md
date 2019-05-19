@@ -10,5 +10,5 @@
 
 **Exercice 3** : manipuler une base de données à partir de fichiers JSP, JavaScript et d'une Servlet (dossier *JSP_BDD*).
 
-![Maquette modifier société](https://raw.githubusercontent.com/emdeo/M2i-JSP/master/JSP_BDD/Modifier%20soci%C3%A9t%C3%A9.PNG) <!-- .element height="50%" width="50%" -->
+![Maquette modifier société](https://raw.githubusercontent.com/emdeo/M2i-JSP/master/JSP_BDD/Modifier%20soci%C3%A9t%C3%A9.PNG) {:height="36px" width="36px"}.
 ![Maquette ajouter employé](https://raw.githubusercontent.com/emdeo/M2i-JSP/master/JSP_BDD/table%20employes.PNG)
