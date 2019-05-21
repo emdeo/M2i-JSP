@@ -154,27 +154,31 @@ public class HTMLDynamique {
 	 */
 	public static String TableauEmployes(int idSociete) {
 
+		String nom_modal = "exampleModal";
+
 		DAO_Personne daop = new DAO_Personne();
+		DAO_Societe daos = new DAO_Societe();
+
 		ArrayList<Personne> lstEmployes = daop.ListeEmployesSociete(idSociete);
 
-		String output = "<br><h3>Table employés</h3><br>";
+		String output = "<br><h3>Employés " + daos.Read(idSociete).get_Nom() + "</h3><br>";
 
 		output += "<table class='table'><thead><tr><th>ID Personne</th>"
 				+ "<th>Nom</th><th>Prenom</th><th>Taille</th><th>Poids"
-				+ "</th><th>Sexe</th><th>ID Société</th><th></th><th></th></tr></thead><tbody>";
+				+ "</th><th>Sexe</th><th>ID Société</th><th></th><th></th></tr></thead><tbody id='tbodyEmployes'>";
 
 		for (Personne p : lstEmployes) {
 			String IDPers = "<tr><td>" + p.getID_Personne() + "</td>";
-			String Nom = "<td>" + p.getNom() + "</td>";
-			String Prenom = "<td>" + p.getPrenom() + "</td>";
-			String Taille = "<td>" + p.getTaille() + "</td>";
-			String Poids = "<td>" + p.getPoids() + "</td>";
+			String Nom = "<td id='tdNomEmploye'>" + p.getNom() + "</td>";
+			String Prenom = "<td id='tdPrenomEmploye'>" + p.getPrenom() + "</td>";
+			String Taille = "<td id='tdTailleEmploye'>" + p.getTaille() + "</td>";
+			String Poids = "<td id='tdPoidsEmploye'>" + p.getPoids() + "</td>";
 			String Genre = "<td>" + p.getGenre() + "</td>";
 			String IDSoc = "<td>" + p.getID_Societe() + "</td>";
 
 			String btnModifier = "<td class='w-5'><button data-idSociete='" + idSociete + "' data-idPersonne='"
-					+ p.getID_Personne() + "' class='btnUpdateEmploye' data-toggle='modal' data-target="
-					+ "'#modalModifierEmploye'><i class='fa fa-pencil'></i></button></td>";
+					+ p.getID_Personne() + "' class='btnUpdateEmploye' data-toggle='modal' data-target=" + "'#"
+					+ nom_modal + "'><i class='fa fa-pencil'></i></button></td>";
 
 			String btnSupprimer = "<td class='w-5'><button data-idSociete='" + idSociete + "' data-idPersonne='"
 					+ +p.getID_Personne() + "' class='btnDeleteEmploye'><i class='fa fa-remove'></i></button></td>";
@@ -184,143 +188,51 @@ public class HTMLDynamique {
 
 		output += "</tr></tbody></table>";
 
-		output += "<button type='button' class='btn btn-primary' id="
-				+ "'btnAjouterEmploye' data-toggle='modal' data-target="
-				+ "'#modalAjoutEmploye'>Ajouter un employé</button>";
+		output += "<button type='button' class='btn btn-primary btnAjouterEmploye'  data-toggle='modal' data-target='"
+				+ "#" + nom_modal + "'>Ajouter un employé</button>";
 
 		return output;
 	}
-	
-	
-	
-	
-	
 
-	public static String ModifierEmploye() {
+	/**
+	 * Modal : ajouter un employé à la société (IDs Personne et Société en
+	 * readonly).
+	 * 
+	 * @return
+	 */
+	public static String GenererModalEmploye() {
 
 		String output = "";
 		String formulaire = "";
 
-		DAO_Personne daop = new DAO_Personne();
-		Personne employe = daop.Read(idEmploye);
-
-		formulaire = "<form class='formModifierEmploye' method=" + "'get' data-idEmploye='" + idEmploye + "'>";
+		formulaire = "<form class='formEmploye' method=" + "'get' data-idEmploye='" + -1 + "'>";
 
 		String IDEmp = "<div class='form-group row'>"
-				+ "<label for='staticIdEmploye' class='col-sm-3 col-form-label'>ID Employe</label>"
+				+ "<label for='staticIdEmploye' class='col-sm-3 col-form-label'>ID Employé</label>"
 				+ "<div class='col-sm-8'>"
-				+ "<input type='text' readonly class='form-control-plaintext' id='staticIdEmploye' value='" + idEmploye
+				+ "<input type='text' readonly class='form-control-plaintext' id='staticIdEmploye' value='" + -1
 				+ "'></div></div>";
 
 		String Nom = "<div class='form-group row'>"
 				+ "<label for='inputNomEmploye' class='col-sm-3 col-form-label'>Nom</label>" + "<div class='col-sm-8'>"
-				+ "<input type='text' class='form-control' id='inputNomEmploye' placeholder='" + employe.getNom() + "'>"
-				+ "</div></div>";
+				+ "<input type='text' class='form-control' id='inputNomEmploye' placeholder='-1'>" + "</div></div>";
 
 		String Prenom = "<div class='form-group row'>"
-				+ "<label for='inputPrenomEmploye' class='col-sm-3 col-form-label'>Prenom</label>"
+				+ "<label for='inputPrenomEmploye' class='col-sm-3 col-form-label'>Prénom</label>"
 				+ "<div class='col-sm-8'>"
-				+ "<input type='text' class='form-control' id='inputPrenomEmploye' placeholder='" + employe.getPrenom()
-				+ "'>" + "</div></div>";
+				+ "<input type='text' class='form-control' id='inputPrenomEmploye' placeholder='-1'>" + "</div></div>";
 
 		String Poids = "<div class='form-group row'>"
 				+ "<label for='inputPoidsEmploye' class='col-sm-3 col-form-label'>Poids</label>"
 				+ "<div class='col-sm-8'>"
 				+ "<input type='text' class='form-control' id='inputPoidsEmploye' min='0' max='200' step='0.1'"
-				+ "placeholder='" + employe.getPoids() + "'>" + "</div></div>";
+				+ "placeholder='-1'>" + "</div></div>";
 
 		String Taille = "<div class='form-group row'>"
 				+ "<label for='inputTailleEmploye' class='col-sm-3 col-form-label'>Taille</label>"
 				+ "<div class='col-sm-8'>"
 				+ "<input type='text' class='form-control' id='inputTailleEmploye' min='0' max='3' step='0.1'"
-				+ "placeholder='"+employe.getTaille()+"'>" + "</div></div>";
-
-		String Genre = "<div class='form-group row'>"
-				+ "<label for='selectGenre' class='col-sm-3 col-form-label'>Sélectionnez le genre :</label>" + "<div class='col-sm-8'>"
-				+ "<select id='selectGenre' class='form-control'>";
-
-		for (Sexe s : Sexe.values()) {
-			Genre += "<option value='" + s + "'>" + s + "</option>";
-		}
-		Genre += "</select></div></div>";
-
-		String IDSoc = "<div class='form-group row'>"
-				+ "<label for='staticIdSociete' class='col-sm-3 col-form-label'>ID Societe</label>"
-				+ "<div class='col-sm-8'>"
-				+ "<input type='text' readonly class='form-control-plaintext' id='staticIdSociete' value='" + employe.getID_Societe()
-				+ "'></div></div>";
-
-		formulaire += IDEmp + Nom + Prenom + Poids + Taille + Genre + IDSoc + "</form>";
-
-		output += "<div class='modal fade' id='modalAjoutEmploye' tabindex="
-				+ "'-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>"
-				+ "<div class='modal-dialog modal-dialog-centered' role='document'>" + "<div class='modal-content'>"
-				+ "<div class='modal-header'>";
-
-		output += "<h5 class='modal-title' id='exampleModalLongTitle'>Modifier un employé</h5>"
-				+ "<button type='button' class='close' data-dismiss='modal'>"
-				+ "<span aria-hidden='true'>&times;</span></button></div><div class='modal-body'>";
-
-		output += formulaire;
-
-		output += "</div>" + "<div class='modal-footer'>"
-				+ "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Annuler</button>"
-				+ "<button type='button' class='btn btn-primary'>Enregistrer</button>" + "</div></div></div></div>";
-
-		return output;
-	}
-
-	
-	
-	
-	
-	
-	public static String AjouterEmploye() {
-
-		String output = "";
-		String formulaire = "";
-
-		DAO_Personne daop = new DAO_Personne();
-
-//		Enregistrer l'ID Employé le plus élevé pour attribuer un ID à la nouvelle société
-		ArrayList<Personne> lstEmployes = daop.ReadAll();
-		int nouvelID = 0;
-		for (Personne emp : lstEmployes) {
-			if (emp.getID_Personne() > nouvelID)
-				nouvelID = emp.getID_Personne();
-		}
-		nouvelID += 1;
-
-		formulaire = "<form class='formAjouterEmploye' method=" + "'get' data-idEmploye='" + nouvelID + "'>";
-
-		String IDEmp = "<div class='form-group row'>"
-				+ "<label for='staticIdEmploye' class='col-sm-3 col-form-label'>ID Employe</label>"
-				+ "<div class='col-sm-8'>"
-				+ "<input type='text' readonly class='form-control-plaintext' id='staticIdEmploye' value='" + nouvelID
-				+ "'></div></div>";
-
-		String Nom = "<div class='form-group row'>"
-				+ "<label for='inputNomEmploye' class='col-sm-3 col-form-label'>Nom</label>" + "<div class='col-sm-8'>"
-				+ "<input type='text' class='form-control' id='inputNomEmploye' placeholder='(entrez un nom)'>"
-				+ "</div></div>";
-
-		String Prenom = "<div class='form-group row'>"
-				+ "<label for='inputPrenomEmploye' class='col-sm-3 col-form-label'>Prenom</label>"
-				+ "<div class='col-sm-8'>"
-				+ "<input type='text' class='form-control' id='inputPrenomEmploye' placeholder='(entrez un prénom)'>"
-				+ "</div></div>";
-
-		String Poids = "<div class='form-group row'>"
-				+ "<label for='inputPoidsEmploye' class='col-sm-3 col-form-label'>Poids</label>"
-				+ "<div class='col-sm-8'>"
-				+ "<input type='text' class='form-control' id='inputPoidsEmploye' min='0' max='200' step='0.1'"
-				+ "placeholder='(en kilogrammes)'>" + "</div></div>";
-
-		String Taille = "<div class='form-group row'>"
-				+ "<label for='inputTailleEmploye' class='col-sm-3 col-form-label'>Taille</label>"
-				+ "<div class='col-sm-8'>"
-				+ "<input type='text' class='form-control' id='inputTailleEmploye' min='0' max='3' step='0.1'"
-				+ "placeholder='(en mètres)'>" + "</div></div>";
+				+ "placeholder='-1'>" + "</div></div>";
 
 		String Genre = "<div class='form-group row'>"
 				+ "<label for='selectGenre' class='col-sm-3 col-form-label'>Genre :</label>" + "<div class='col-sm-8'>"
@@ -332,28 +244,33 @@ public class HTMLDynamique {
 		Genre += "</select></div></div>";
 
 		String IDSoc = "<div class='form-group row'>"
-				+ "<label for='staticIdSociete' class='col-sm-3 col-form-label'>ID Societe</label>"
+				+ "<label for='staticIdSociete' class='col-sm-3 col-form-label'>ID Société</label>"
 				+ "<div class='col-sm-8'>"
-				+ "<input type='text' readonly class='form-control-plaintext' id='staticIdSociete' value='" + nouvelID
+				+ "<input type='text' readonly class='form-control-plaintext' id='staticIdSociete' value='" + -1
 				+ "'></div></div>";
 
 		formulaire += IDEmp + Nom + Prenom + Poids + Taille + Genre + IDSoc + "</form>";
 
-		output += "<div class='modal fade' id='modalAjoutEmploye' tabindex="
+//		ID du modal
+		output += "<div class='modal fade' id='modalEmploye' tabindex="
 				+ "'-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>"
-				+ "<div class='modal-dialog modal-dialog-centered' role='document'>" + "<div class='modal-content'>"
-				+ "<div class='modal-header'>";
+				+ "<div class='modal-dialog modal-dialog-centered' role='document'>"
+				+ "<div class='modal-content' id='modalEmploye-content'>" + "<div class='modal-header'>";
 
-		output += "<h5 class='modal-title' id='exampleModalLongTitle'>Ajouter un employé</h5>"
+//		Titre du modal
+		output += "<h5 class='modal-title' id='modalEmploye-titre'>Modal PAR DEFAUT</h5>"
 				+ "<button type='button' class='close' data-dismiss='modal'>"
-				+ "<span aria-hidden='true'>&times;</span></button></div><div class='modal-body'>";
+				+ "<span aria-hidden='true'>&times;</span></button></div>";
 
-		output += formulaire;
+//		Corps du modal
+		output += "<div class='modal-body'>" + formulaire + "</div>";
 
-		output += "</div>" + "<div class='modal-footer'>"
+//		Pieds du modal
+		output += "<div class='modal-footer'>"
 				+ "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Annuler</button>"
 				+ "<button type='button' class='btn btn-primary'>Enregistrer</button>" + "</div></div></div></div>";
 
 		return output;
 	}
+
 }
