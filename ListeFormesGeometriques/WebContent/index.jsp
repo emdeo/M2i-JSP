@@ -38,7 +38,7 @@
 
 	<div class="container">
 		<br>
-		<h2>Liste des formes géometriques</h2>
+		<h2>Formes géométriques</h2>
 		<br>
 
 		<table class="table">
@@ -73,13 +73,13 @@
 
 		<div class="collapse" id="collapseNouveau">
 			<div class="card card-body">
-				<div class="row justify-content-md-center">
+				<div class="container">
 					<form>
 
 						<div class="form-group row">
 							<!-- Radios -->
 
-							<div class="col col-md-2" id="radioForme">
+							<div class="col" id="radioForme">
 								<div class="form-check">
 									<input class="form-check-input" type="radio"
 										name="inlineRadioOptions" id="rCercle" value="cercle">
@@ -99,18 +99,18 @@
 
 
 
-							<div class="col col-md-8">
+							<div class="col-9">
 
 								<!-- COORDONNEES -->
 								<div class="form-group row" id="coordonnees">
-									<label for="txtAbscisse" class="col-md-1 col-form-label">X</label>
-									<div class="col-md-5">
+									<label for="txtAbscisse" class="col-md-2 col-form-label">X</label>
+									<div class="col-md-3">
 										<input type="number" class="form-control" id="txtAbscisse"
 											placeholder="abscisse">
 									</div>
 
-									<label for="txtOrdonnee" class="col-md-1 col-form-label">Y</label>
-									<div class="col-md-5">
+									<label for="txtOrdonnee" class="col-md-2 col-form-label">Y</label>
+									<div class="col-md-3">
 										<input type="number" class="form-control" id="txtOrdonnee"
 											placeholder="ordonnée">
 									</div>
@@ -122,7 +122,7 @@
 							</div>
 
 							<!-- BOUTON 'AJOUTER' -->
-							<div class="col col-md-2">
+							<div class="col">
 								<button type="button" class="btn btn-primary" id="cmdAjouter">Ajouter</button>
 							</div>
 
@@ -139,9 +139,10 @@
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
+			
+			<!-- TITRE DU MODAL (généré dynamiquement dans 'sources.js') -->
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Dessin de la
-						forme</h5>
+					<h5 class="modal-title" id="titreModalDessin"></h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
