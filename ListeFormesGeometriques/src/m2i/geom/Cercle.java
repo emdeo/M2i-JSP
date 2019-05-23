@@ -6,6 +6,8 @@ public class Cercle implements IGeometrie {
 	private int _X;
 	private int _Y;
 	private float _Rayon;
+	private float _Surface;
+	private float _Perimetre;
 
 	public Cercle(int _ID_Forme, int _X, int _Y, float _Rayon) {
 		super();
@@ -13,6 +15,8 @@ public class Cercle implements IGeometrie {
 		this._X = _X;
 		this._Y = _Y;
 		this._Rayon = _Rayon;
+		this._Surface = Surface();
+		this._Perimetre = Perimetre();
 	}
 
 	@Override
@@ -56,5 +60,14 @@ public class Cercle implements IGeometrie {
 	public void set_ID_Forme(int _ID_Forme) {
 		this._ID_Forme = _ID_Forme;
 	}
+
+	public float get_Surface() {
+		return _Surface;
+	}
+
+	public float get_Perimetre() {
+		return _Perimetre;
+	}
+	
 
 }

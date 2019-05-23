@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Librairies nÃ©cessaires Ã  BootStrap -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script
@@ -13,6 +15,14 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- Librairie d'icÃ´nes boutons -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Fichier CSS personnalisÃ© -->
+<link rel="stylesheet" href="index.css">
+
 <title>Insert title here</title>
 
 <!-- BootStrap CSS -->
@@ -20,28 +30,29 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
-	<script src="utilitaires.js"></script>
-	<script src="sources.js"></script>
+<script src="utilitaires.js"></script>
+<script src="sources.js"></script>
 
 </head>
 <body>
 
 	<div class="container">
 		<br>
-		<h2>Liste des formes géometriques</h2>
+		<h2>Liste des formes gÃ©ometriques</h2>
 		<br>
 
 		<table class="table">
 			<thead>
 				<tr>
+					<th>ID forme</th>
 					<th>X</th>
 					<th>Y</th>
 					<th>Longueur</th>
 					<th>Largeur</th>
-					<th>Côtés</th>
+					<th>CÃ´tÃ©s</th>
 					<th>Rayon</th>
 					<th>Surface</th>
-					<th>Périmètre</th>
+					<th>PÃ©rimÃ¨tre</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -67,20 +78,21 @@
 
 						<div class="form-group row">
 							<!-- Radios -->
-							<div class="col col-md-2">
+
+							<div class="col col-md-2" id="radioForme">
 								<div class="form-check">
 									<input class="form-check-input" type="radio"
-										name="inlineRadioOptions" id="inlineRadio1" value="option1">
+										name="inlineRadioOptions" id="rCercle" value="cercle">
 									<label class="form-check-label" for="inlineRadio1">Cercle</label>
 								</div>
 								<div class="form-check">
 									<input class="form-check-input" type="radio"
-										name="inlineRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label" for="inlineRadio2">Carré</label>
+										name="inlineRadioOptions" id="rCarre" value="carre"> <label
+										class="form-check-label" for="inlineRadio2">CarrÃ©</label>
 								</div>
 								<div class="form-check">
 									<input class="form-check-input" type="radio"
-										name="inlineRadioOptions" id="inlineRadio3" value="option3">
+										name="inlineRadioOptions" id="rRectangle" value="rectangle">
 									<label class="form-check-label" for="inlineRadio3">Rectangle</label>
 								</div>
 							</div>
@@ -88,36 +100,67 @@
 
 
 							<div class="col col-md-8">
-								<!-- Coordonnées -->
+
+								<!-- COORDONNEES -->
 								<div class="form-group row" id="coordonnees">
 									<label for="txtAbscisse" class="col-md-1 col-form-label">X</label>
-									<div class="col-md-3">
+									<div class="col-md-5">
 										<input type="number" class="form-control" id="txtAbscisse"
 											placeholder="abscisse">
 									</div>
 
 									<label for="txtOrdonnee" class="col-md-1 col-form-label">Y</label>
-									<div class="col-md-3">
+									<div class="col-md-5">
 										<input type="number" class="form-control" id="txtOrdonnee"
-											placeholder="ordonnée">
+											placeholder="ordonnÃ©e">
 									</div>
 								</div>
 
-								<div id="dimensions"></div>
+								<!-- DIMENSIONS -->
+								<div id="dimensions" class="form-group row"></div>
+
 							</div>
 
+							<!-- BOUTON 'AJOUTER' -->
 							<div class="col col-md-2">
-								<button type="button" class="btn btn-primary">Ajouter</button>
+								<button type="button" class="btn btn-primary" id="cmdAjouter">Ajouter</button>
 							</div>
 
 						</div>
 					</form>
 				</div>
-				<!-- "Rayons", "côtés", "longueur" -->
-
 
 			</div>
 		</div>
 	</div>
+
+	<!-- MODAL #modalDessin -->
+	<div class="modal fade" id="modalDessin" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Dessin de la
+						forme</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- CORPS DU MODAL -->
+				<div class="modal-body" id="modalbody-Dessin">
+					<canvas id="canvasForme" width="300" height="300">
+				</canvas>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Fermer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>

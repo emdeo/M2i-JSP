@@ -7,6 +7,8 @@ public class Rectangle implements IGeometrie {
 	private int _Y;
 	private float _Longueur;
 	private float _Largeur;
+	private float _Surface;
+	private float _Perimetre;
 
 	public Rectangle(int _ID_Forme, int _X, int _Y, float _Longueur, float _Largeur) {
 		super();
@@ -15,6 +17,8 @@ public class Rectangle implements IGeometrie {
 		this._Y = _Y;
 		this._Longueur = _Longueur;
 		this._Largeur = _Largeur;
+		this._Surface = Surface();
+		this._Perimetre = Perimetre();
 	}
 
 	@Override
