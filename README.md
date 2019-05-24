@@ -12,3 +12,7 @@
 
 ![Maquette modifier société](https://raw.githubusercontent.com/emdeo/M2i-JSP/master/JSP_BDD/Modifier%20soci%C3%A9t%C3%A9.PNG)
 ![Maquette ajouter employé](https://raw.githubusercontent.com/emdeo/M2i-JSP/master/JSP_BDD/Tableau%20employ%C3%A9s.PNG)
+
+**Exercice 4** : ajouter et dessiner des formes géométriques (cercles, rectangles et carrés) à partir d'une application web (fait avec Julien et Maithaa).
+
+![Maquette liste de formes géométriques](https://raw.githubusercontent.com/emdeo/M2i-JSP/master/Liste%20formes%20g%C3%A9om%C3%A9triques.PNG)
