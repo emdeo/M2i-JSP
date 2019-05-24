@@ -1,0 +1,35 @@
+@charset "ISO-8859-1";
+
+/* 
+	Styles de boutons
+	Liste des noms de couleur : https://htmlcolorcodes.com/fr/noms-de-couleur/
+*/
+.btn {
+	border: none; /* Pas de bordures */
+	color: white; /* Texte blanc */
+	padding: 12px 16px; /* Padding */
+	font-size: 16px; /* Taille de police */
+	cursor: pointer; /* Forme de la souris quand on passe dessus */
+}
+
+.btnDessiner {
+	background-color: DodgerBlue; /* Bleu */
+}
+
+.btnDessiner:hover {
+	background-color: RoyalBlue; /* Bleu sombre en passant la souris */
+}
+/*
+	Largeurs de colonne
+*/
+table .w-5 {
+	width: 5%;
+}
+
+table .w-12 {
+	width: 12%;
+}
+
+table .w-15 {
+	width: 15%;
+}
